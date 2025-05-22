@@ -42,25 +42,25 @@ const Navigation: React.FC = () => {
           className="text-xl font-space font-bold"
           aria-label="Home"
         >
-          Portfolio.
+          Pablo Morro.
         </a>
         
         {/* Desktop Navigation */}
         <ul className="hidden md:flex space-x-10">
           {[
             { name: "Home", href: "#home" },
-            { name: "About", href: "#about" },
-            { name: "Projects", href: "#projects" },
-            { name: "Contact", href: "#contact" },
+            { name: "Sobre mí", href: "#about" },
+            { name: "Proyectos", href: "#projects" },
+            { name: "Contacto", href: "#contact" },
           ].map((item) => (
             <li key={item.name}>
               <a
                 href={item.href}
-                className="group relative py-2 text-base tracking-wide transition-colors hover:text-black"
-                aria-label={`Go to ${item.name} section`}
+                className="group relative py-2 text-base tracking-wide transition-colors hover:text-brand-blue"
+                aria-label={`Ir a la sección ${item.name}`}
               >
                 {item.name}
-                <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-black transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-brand-blue transition-all duration-300 group-hover:w-full"></span>
               </a>
             </li>
           ))}
@@ -72,7 +72,7 @@ const Navigation: React.FC = () => {
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-expanded={isMenuOpen}
           aria-controls="mobile-menu"
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
         >
           <div className={`hamburger-menu ${isMenuOpen ? "open" : ""}`}>
             <span></span>
@@ -94,16 +94,16 @@ const Navigation: React.FC = () => {
         <ul className="flex flex-col items-center space-y-8 text-2xl">
           {[
             { name: "Home", href: "#home" },
-            { name: "About", href: "#about" },
-            { name: "Projects", href: "#projects" },
-            { name: "Contact", href: "#contact" },
+            { name: "Sobre mí", href: "#about" },
+            { name: "Proyectos", href: "#projects" },
+            { name: "Contacto", href: "#contact" },
           ].map((item) => (
             <li key={item.name}>
               <a
                 href={item.href}
-                className="hover:text-neutral-500 transition-colors duration-300"
+                className="hover:text-brand-blue transition-colors duration-300"
                 onClick={handleNavLinkClick}
-                aria-label={`Go to ${item.name} section`}
+                aria-label={`Ir a la sección ${item.name}`}
               >
                 {item.name}
               </a>

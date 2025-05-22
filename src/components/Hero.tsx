@@ -42,27 +42,27 @@ const Hero: React.FC = () => {
         <h1 
           ref={headingRef}
           className={cn(
-            "text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold leading-tight transition-all duration-700",
+            "text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold leading-tight transition-all duration-700 text-gray-900",
             "opacity-0 translate-y-10"
           )}
         >
           <MagneticText 
-            text="I create immersive UX experiences." 
+            text="Diseñando experiencias que conectan personas con tecnología." 
             strength={20}
           />
         </h1>
         
-        <p className="mt-6 text-lg sm:text-xl text-gray-600 dark:text-gray-300 animate-fade-in opacity-0" style={{ animationDelay: '300ms' }}>
-          UX/UI Designer + Ex-Game Designer
+        <p className="mt-6 text-lg sm:text-xl text-gray-700 animate-fade-in opacity-0" style={{ animationDelay: '300ms' }}>
+          Diseñador UX/UI especializado en prototipado y experiencia de usuario.
         </p>
         
         <a
           href="#projects"
-          className="mt-12 inline-flex items-center px-8 py-3 bg-black text-white rounded-full font-medium transition-all hover:bg-gray-800 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 animate-fade-in opacity-0"
+          className="mt-12 inline-flex items-center px-8 py-3 bg-brand-blue text-white rounded-full font-medium transition-all hover:bg-brand-blue/90 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 animate-fade-in opacity-0"
           style={{ animationDelay: '600ms' }}
-          aria-label="Explore my work"
+          aria-label="Explorar mis proyectos"
         >
-          Explore my work
+          Explora mis proyectos
           <svg 
             className="ml-2 w-5 h-5" 
             fill="none" 
@@ -82,8 +82,8 @@ const Hero: React.FC = () => {
       
       {/* Background elements */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-green-soft opacity-30 blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-56 h-56 rounded-full bg-green-soft opacity-20 blur-3xl"></div>
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-brand-light opacity-30 blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-56 h-56 rounded-full bg-brand-light opacity-20 blur-3xl"></div>
       </div>
       
       {/* Scroll indicator */}

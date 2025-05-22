@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
               className="text-xl font-space font-bold"
               aria-label="Back to top"
             >
-              Portfolio.
+              Pablo Morro.
             </a>
           </div>
           
@@ -22,27 +22,27 @@ const Footer: React.FC = () => {
               className="text-gray-400 hover:text-white transition-colors"
               aria-label="Privacy policy"
             >
-              Privacy
+              Privacidad
             </a>
             <a 
               href="#" 
               className="text-gray-400 hover:text-white transition-colors"
               aria-label="Terms of service"
             >
-              Terms
+              Términos
             </a>
             <a 
-              href="#" 
+              href="#contact" 
               className="text-gray-400 hover:text-white transition-colors"
               aria-label="Contact me"
             >
-              Contact
+              Contacto
             </a>
           </div>
           
           <div className="mt-6 md:mt-0">
             <p className="text-xs text-gray-400">
-              &copy; {new Date().getFullYear()} All Rights Reserved
+              &copy; {new Date().getFullYear()} Pablo Morro Ibáñez. Todos los derechos reservados.
             </p>
           </div>
         </div>

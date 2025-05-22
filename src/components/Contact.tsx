@@ -43,11 +43,15 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-20 md:py-32 px-6 bg-green-soft">
+    <section id="contact" className="py-20 md:py-32 px-6 bg-brand-light">
       <div className="max-w-5xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-space font-semibold mb-16 tracking-tight">
-          Get In Touch
+        <h2 className="text-3xl md:text-4xl font-space font-semibold mb-8 tracking-tight text-brand-blue">
+          Contacto
         </h2>
+        
+        <h3 className="text-2xl md:text-3xl font-space font-medium mb-16 tracking-tight max-w-2xl mx-auto text-center">
+          ¿Colaboramos en tu próxima experiencia?
+        </h3>
         
         <div className="grid md:grid-cols-2 gap-16">
           {/* Left column - Contact form */}
@@ -58,7 +62,7 @@ const Contact: React.FC = () => {
                   htmlFor="name" 
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Name
+                  Nombre
                 </label>
                 <input
                   type="text"
@@ -67,7 +71,7 @@ const Contact: React.FC = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent outline-none transition"
                   aria-required="true"
                 />
               </div>
@@ -86,7 +90,7 @@ const Contact: React.FC = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent outline-none transition"
                   aria-required="true"
                 />
               </div>
@@ -96,7 +100,7 @@ const Contact: React.FC = () => {
                   htmlFor="message" 
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Message
+                  Mensaje
                 </label>
                 <textarea
                   id="message"
@@ -105,7 +109,7 @@ const Contact: React.FC = () => {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent outline-none transition"
                   aria-required="true"
                 ></textarea>
               </div>
@@ -114,24 +118,24 @@ const Contact: React.FC = () => {
                 type="submit"
                 disabled={isSubmitting}
                 className={cn(
-                  "w-full py-3 px-8 rounded-lg font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black",
+                  "w-full py-3 px-8 rounded-lg font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-blue",
                   isSubmitting 
                     ? "bg-gray-400 cursor-not-allowed" 
-                    : "bg-black text-white hover:bg-gray-800"
+                    : "bg-brand-blue text-white hover:bg-brand-blue/90"
                 )}
               >
-                {isSubmitting ? 'Sending...' : 'Send Message'}
+                {isSubmitting ? 'Enviando...' : 'Enviar mensaje'}
               </button>
               
               {submitStatus === 'success' && (
                 <div className="text-green-600 text-sm mt-2">
-                  Message sent successfully!
+                  ¡Mensaje enviado con éxito!
                 </div>
               )}
               
               {submitStatus === 'error' && (
                 <div className="text-red-600 text-sm mt-2">
-                  There was an error sending your message. Please try again.
+                  Hubo un error al enviar tu mensaje. Por favor, inténtalo de nuevo.
                 </div>
               )}
             </form>
@@ -141,22 +145,22 @@ const Contact: React.FC = () => {
           <div className="flex flex-col justify-between">
             <div className="space-y-8">
               <div>
-                <h3 className="text-xl font-space font-medium mb-4">Let's Connect</h3>
+                <h3 className="text-xl font-space font-medium mb-4 text-brand-blue">Conectemos</h3>
                 <p className="text-gray-700">
-                  Have a project in mind or just want to chat about UX design and gaming? 
-                  Feel free to reach out through the form or connect with me on social media.
+                  ¿Tienes un proyecto en mente o simplemente quieres hablar sobre diseño UX/UI y videojuegos? 
+                  No dudes en contactarme a través del formulario o en mis redes sociales.
                 </p>
               </div>
               
               <div>
-                <h3 className="text-xl font-space font-medium mb-4">Follow Me</h3>
+                <h3 className="text-xl font-space font-medium mb-4 text-brand-blue">Sígueme</h3>
                 <div className="flex space-x-4">
                   <a
                     href="#"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="LinkedIn Profile"
-                    className="p-3 bg-black text-white rounded-full hover:bg-gray-800 transition-colors"
+                    className="p-3 bg-brand-blue text-white rounded-full hover:bg-brand-blue/80 transition-colors"
                   >
                     <svg 
                       className="w-5 h-5" 
@@ -172,7 +176,7 @@ const Contact: React.FC = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Behance Profile"
-                    className="p-3 bg-black text-white rounded-full hover:bg-gray-800 transition-colors"
+                    className="p-3 bg-brand-blue text-white rounded-full hover:bg-brand-blue/80 transition-colors"
                   >
                     <svg 
                       className="w-5 h-5" 
@@ -188,7 +192,7 @@ const Contact: React.FC = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Dribbble Profile"
-                    className="p-3 bg-black text-white rounded-full hover:bg-gray-800 transition-colors"
+                    className="p-3 bg-brand-blue text-white rounded-full hover:bg-brand-blue/80 transition-colors"
                   >
                     <svg 
                       className="w-5 h-5" 
@@ -204,8 +208,8 @@ const Contact: React.FC = () => {
             
             <div className="mt-12">
               <p className="text-sm text-gray-600">
-                Based in Madrid, Spain<br />
-                Available for freelance projects worldwide
+                Basado en Madrid, España<br />
+                Disponible para proyectos freelance a nivel mundial
               </p>
             </div>
           </div>

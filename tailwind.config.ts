@@ -29,8 +29,9 @@ export default {
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
-				green: {
-					soft: '#F2FCE2',
+				brand: {
+					blue: '#0077C8',
+					light: '#E6F3FB',
 				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
@@ -68,12 +69,12 @@ export default {
 			},
 			keyframes: {
 				'accordion-down': {
-					from: { height: '0' },
-					to: { height: 'var(--radix-accordion-content-height)' }
+					from: { height: '0', opacity: '0' },
+					to: { height: 'var(--radix-accordion-content-height)', opacity: '1' }
 				},
 				'accordion-up': {
-					from: { height: 'var(--radix-accordion-content-height)' },
-					to: { height: '0' }
+					from: { height: 'var(--radix-accordion-content-height)', opacity: '1' },
+					to: { height: '0', opacity: '0' }
 				},
 				'fade-in': {
 					from: { opacity: '0', transform: 'translateY(10px)' },

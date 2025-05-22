@@ -9,31 +9,33 @@ interface Project {
   image: string;
   tools: string[];
   link: string;
+  case_study?: string;
 }
 
 const projects: Project[] = [
   {
     id: 1,
-    title: "Immersive Game UI",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam.",
+    title: "GreenCare",
+    description: "GreenCare fue diseñada para ayudar a usuarios a cuidar sus plantas con una interfaz clara, visual y calmada. La aplicación proporciona información esencial sobre el cuidado de plantas, incluyendo horarios de riego y alimentación adaptados a cada tipo de planta.",
+    image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7",
+    tools: ["Figma", "Adobe XD", "Illustrator"],
+    link: "#",
+    case_study: "/projects/greencare",
+  },
+  {
+    id: 2,
+    title: "Game UI Suite",
+    description: "Sistema completo de UI para videojuegos, con componentes modulares adaptables a diferentes géneros y plataformas. Diseñado para maximizar la inmersión del jugador sin sacrificar usabilidad.",
     image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
     tools: ["Figma", "Framer", "Unity"],
     link: "#",
   },
   {
-    id: 2,
-    title: "Fintech Mobile App",
-    description: "Maecenas egestas arcu quis ligula mattis placerat. Praesent metus tellus, elementum eu, semper a, adipiscing nec, purus. Vestibulum volutpat pretium libero.",
-    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5",
-    tools: ["Sketch", "Adobe XD", "Zeplin"],
-    link: "#",
-  },
-  {
     id: 3,
-    title: "E-commerce Experience",
-    description: "Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.",
-    image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1",
-    tools: ["Figma", "Photoshop", "Illustrator"],
+    title: "FinTech App",
+    description: "Aplicación financiera para jóvenes inversores que simplifica conceptos complejos mediante visualizaciones interactivas y una experiencia educativa integrada en el flujo principal.",
+    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5",
+    tools: ["Sketch", "Principle", "Zeplin"],
     link: "#",
   },
 ];
@@ -76,7 +78,7 @@ const Projects: React.FC = () => {
     <section id="projects" className="bg-black text-white py-20 md:py-32">
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-space font-semibold mb-16 tracking-tight">
-          Projects
+          Proyectos
         </h2>
         
         {projects.map((project, index) => (
@@ -132,27 +134,53 @@ const Projects: React.FC = () => {
                     ))}
                   </div>
                   
-                  <a 
-                    href={project.link}
-                    className="inline-flex items-center px-6 py-2 mt-4 border-2 border-white rounded-full text-white hover:bg-white hover:text-black transition-colors"
-                    aria-label={`View more about ${project.title}`}
-                  >
-                    View More
-                    <svg 
-                      className="ml-2 w-5 h-5" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24" 
-                      xmlns="http://www.w3.org/2000/svg"
+                  <div className="flex flex-wrap gap-4">
+                    <a 
+                      href={project.link}
+                      className="inline-flex items-center px-6 py-2 border-2 border-white rounded-full text-white hover:bg-white hover:text-black transition-colors"
+                      aria-label={`Ver más sobre ${project.title}`}
                     >
-                      <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M14 5l7 7m0 0l-7 7m7-7H3"
-                      />
-                    </svg>
-                  </a>
+                      Ver prototipo
+                      <svg 
+                        className="ml-2 w-5 h-5" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24" 
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round" 
+                          strokeWidth={2} 
+                          d="M14 5l7 7m0 0l-7 7m7-7H3"
+                        />
+                      </svg>
+                    </a>
+                    
+                    {project.case_study && (
+                      <a 
+                        href={project.case_study}
+                        className="inline-flex items-center px-6 py-2 bg-brand-blue rounded-full text-white hover:bg-brand-blue/90 transition-colors"
+                        aria-label={`Ver caso de estudio de ${project.title}`}
+                      >
+                        Caso de estudio
+                        <svg 
+                          className="ml-2 w-5 h-5" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24" 
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            strokeWidth={2} 
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

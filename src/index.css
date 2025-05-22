@@ -175,3 +175,39 @@ html {
   top: 10px;
   transform: rotate(-45deg);
 }
+
+/* Timeline component styles */
+.timeline-container {
+  position: relative;
+  padding-left: 28px;
+}
+
+.timeline-container::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: #0077C8;
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 24px;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -28px;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #0077C8;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
