@@ -1,5 +1,5 @@
-
 import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 interface Project {
@@ -135,8 +135,8 @@ const Projects: React.FC = () => {
                   </div>
                   
                   <div className="flex flex-wrap gap-4">
-                    <a 
-                      href={project.link}
+                    <Link 
+                      to={project.link}
                       className="inline-flex items-center px-6 py-2 border-2 border-white rounded-full text-white hover:bg-white hover:text-black transition-colors"
                       aria-label={`Ver más sobre ${project.title}`}
                     >
@@ -155,11 +155,11 @@ const Projects: React.FC = () => {
                           d="M14 5l7 7m0 0l-7 7m7-7H3"
                         />
                       </svg>
-                    </a>
+                    </Link>
                     
                     {project.case_study && (
-                      <a 
-                        href={project.case_study}
+                      <Link 
+                        to={project.case_study}
                         className="inline-flex items-center px-6 py-2 bg-brand-blue rounded-full text-white hover:bg-brand-blue/90 transition-colors"
                         aria-label={`Ver caso de estudio de ${project.title}`}
                       >
@@ -178,7 +178,7 @@ const Projects: React.FC = () => {
                             d="M9 5l7 7-7 7"
                           />
                         </svg>
-                      </a>
+                      </Link>
                     )}
                   </div>
                 </div>
