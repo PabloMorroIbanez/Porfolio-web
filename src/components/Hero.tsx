@@ -39,17 +39,14 @@ const Hero: React.FC = () => {
       className="h-screen w-full flex flex-col items-center justify-center relative overflow-hidden px-6"
     >
       <div className="max-w-5xl mx-auto text-center z-10">
-        <h1 
+        <h1
           ref={headingRef}
           className={cn(
             "text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold leading-tight transition-all duration-700 text-gray-900",
             "opacity-0 translate-y-10"
           )}
         >
-          <MagneticText 
-            text="Diseñando experiencias que conectan personas con tecnología." 
-            strength={20}
-          />
+          Diseñando experiencias que conectan personas con tecnología.
         </h1>
         
         <p className="mt-6 text-lg sm:text-xl text-gray-700 animate-fade-in opacity-0" style={{ animationDelay: '300ms' }}>
