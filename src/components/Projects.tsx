@@ -10,6 +10,7 @@ interface Project {
   tools: string[];
   link: string;
   case_study?: string;
+  bgColor?: string; 
 }
 
 const projects: Project[] = [
@@ -21,14 +22,16 @@ const projects: Project[] = [
     tools: ["Figma", "Adobe XD", "Illustrator"],
     link: "#",
     case_study: "/projects/greencare",
+    bgColor: "bg-green-100",
   },
   {
     id: 2,
-    title: "Game UI Suite",
+    title: "App OPN",
     description: "Sistema completo de UI para videojuegos, con componentes modulares adaptables a diferentes géneros y plataformas. Diseñado para maximizar la inmersión del jugador sin sacrificar usabilidad.",
     image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
-    tools: ["Figma", "Framer", "Unity"],
-    link: "#",
+    tools: ["Figma", "Lovable", "Notion"],
+    link: "/projects/appopn",
+    bgColor: "bg-blue-100",
   },
   {
     id: 3,
@@ -37,156 +40,145 @@ const projects: Project[] = [
     image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5",
     tools: ["Sketch", "Principle", "Zeplin"],
     link: "#",
+    bgColor: "bg-yellow-100",
   },
 ];
 
 const Projects: React.FC = () => {
-  const [activeProject, setActiveProject] = useState<number | null>(null);
-  const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const titleRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const projectsSectionRef = useRef<HTMLDivElement | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [scrollProgress, setScrollProgress] = useState<number>(0);
+  const [isProjectsVisible, setIsProjectsVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      projectRefs.current.forEach((projectRef, index) => {
-        if (!projectRef) return;
+      if (!projectsSectionRef.current) return;
+      const rect = projectsSectionRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      // Empieza a encoger cuando la sección entra en viewport
+      const start = windowHeight * 0.1;
+      const end = windowHeight * 0.6;
+      const progress = Math.min(1, Math.max(0, (start - rect.top) / (end - start)));
+      setScrollProgress(progress);
+    };
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-        const rect = projectRef.getBoundingClientRect();
+  useEffect(() => {
+    const handleScroll = () => {
+      sectionRefs.current.forEach((ref, idx) => {
+        if (!ref) return;
+        const rect = ref.getBoundingClientRect();
         const windowHeight = window.innerHeight;
-        
-        // When project section is in view
-        if (rect.top < windowHeight * 0.75 && rect.bottom > windowHeight * 0.25) {
-          setActiveProject(index);
-          
-          // Add visible class to content
-          if (contentRefs.current[index]) {
-            contentRefs.current[index]?.classList.add('visible');
-          }
+        // Detect if section is in view
+        if (rect.top < windowHeight * 0.5 && rect.bottom > windowHeight * 0.5) {
+          setActiveIndex(idx);
+          // Calcula el progreso de scroll dentro de la sección (0 a 1)
+          const progress = Math.min(
+            1,
+            Math.max(0, (windowHeight * 0.5 - rect.top) / rect.height)
+          );
+          setScrollProgress(progress);
         }
       });
     };
-
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <section id="projects" className="bg-black text-white py-20 md:py-32">
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-3xl md:text-4xl font-space font-semibold mb-16 tracking-tight">
-          Proyectos
-        </h2>
-        
-        {projects.map((project, index) => (
-          <div 
+    <section
+      id="projects"
+      className="relative"
+      ref={projectsSectionRef}
+    >
+      {projects.map((project, idx) => {
+        const isActive = idx === activeIndex;
+
+        return (
+           <div
             key={project.id}
-            ref={el => projectRefs.current[index] = el}
-            className="project-section min-h-screen py-20 md:py-32"
+            ref={el => (sectionRefs.current[idx] = el)}
+            className={`relative min-h-screen flex flex-col justify-center items-center transition-colors duration-500 ${project.bgColor}`}
+            style={{ zIndex: isActive ? 20 : 1 }}
           >
-            {/* Full-screen title that shrinks on scroll */}
-            <div 
-              ref={el => titleRefs.current[index] = el}
+            {/* Overlay y texto solo si la sección de proyectos es visible */}
+            {isProjectsVisible && (
+              <>
+                {/* Texto grande y transparente */}
+                <div
+                  className="fixed inset-0 flex items-center justify-center pointer-events-none transition-all duration-500"
+                  style={{
+                    zIndex: 20,
+                    transform: `scale(${1 - 0.7 * scrollProgress})`,
+                    top: scrollProgress === 1 ? '10vh' : '0',
+                    opacity: 1,
+                    transition: 'transform 0.3s, opacity 0.3s',
+                    fontWeight: 'bold',
+                    fontSize: scrollProgress === 1 ? '3rem' : 'clamp(2rem, 16vw, 12rem)',
+                    textTransform: 'uppercase',
+                    textAlign: 'center',
+                    color: 'transparent',
+                    WebkitTextStroke: '2px #fff', // Opcional para dar borde blanco
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'white',
+                    backgroundClip: 'text',
+                  }}
+                >
+                  {project.title}
+                </div>
+              </>
+            )}
+            {/* Contenido revelado */}
+            <div
               className={cn(
-                "sticky top-0 h-screen flex items-center justify-center transition-all duration-700",
-                index === activeProject ? "opacity-100" : "opacity-0"
+                "transition-all duration-500 w-full max-w-5xl mx-auto px-6",
+                isActive && scrollProgress > 0.4 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
               )}
-            >
-              <h3 className="text-4xl md:text-6xl lg:text-8xl font-space font-bold text-white project-title">
-                {project.title}
-              </h3>
-            </div>
-            
-            {/* Project content that appears as you scroll */}
-            <div 
-              ref={el => contentRefs.current[index] = el}
-              className="project-content mt-[-40vh] md:mt-[-30vh] relative z-10"
+              style={{
+                zIndex: 30,
+                marginTop: '60vh',
+                pointerEvents: isActive && scrollProgress > 0.4 ? 'auto' : 'none',
+              }}
             >
               <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
                 <div className="aspect-[4/3] overflow-hidden rounded-lg bg-gray-900">
-                  <img 
-                    src={project.image} 
-                    alt={project.title} 
+                  <img
+                    src={project.image}
+                    alt={project.title}
                     className="w-full h-full object-cover"
-                    width="800"
-                    height="600"
                   />
                 </div>
-                
                 <div className="space-y-6">
                   <h4 className="text-2xl md:text-3xl font-space font-medium">{project.title}</h4>
-                  
-                  <p className="text-base md:text-lg text-gray-300">
-                    {project.description}
-                  </p>
-                  
+                  <p className="text-base md:text-lg text-gray-300">{project.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {project.tools.map(tool => (
-                      <span 
-                        key={tool} 
-                        className="px-3 py-1 text-sm bg-gray-800 rounded-full"
-                      >
-                        {tool}
-                      </span>
+                      <span key={tool} className="px-3 py-1 text-sm bg-gray-800 rounded-full">{tool}</span>
                     ))}
                   </div>
-                  
                   <div className="flex flex-wrap gap-4">
-                    <Link 
-                      to={project.link}
-                      className="inline-flex items-center px-6 py-2 border-2 border-white rounded-full text-white hover:bg-white hover:text-black transition-colors"
-                      aria-label={`Ver más sobre ${project.title}`}
+                    <Link
+                      to={`/projects/${project.title.toLowerCase().replace(/\s+/g, '')}`}
+                      className="inline-flex items-center px-6 py-2 bg-brand-blue rounded-full text-white hover:bg-brand-blue/90 transition-colors"
+                      aria-label={`Ver caso de estudio de ${project.title}`}
                     >
-                      Ver prototipo
-                      <svg 
-                        className="ml-2 w-5 h-5" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24" 
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path 
-                          strokeLinecap="round" 
-                          strokeLinejoin="round" 
-                          strokeWidth={2} 
-                          d="M14 5l7 7m0 0l-7 7m7-7H3"
-                        />
+                      Caso de estudio
+                      <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </Link>
-                    
-                    {project.case_study && (
-                      <Link 
-                        to={project.case_study}
-                        className="inline-flex items-center px-6 py-2 bg-brand-blue rounded-full text-white hover:bg-brand-blue/90 transition-colors"
-                        aria-label={`Ver caso de estudio de ${project.title}`}
-                      >
-                        Caso de estudio
-                        <svg 
-                          className="ml-2 w-5 h-5" 
-                          fill="none" 
-                          stroke="currentColor" 
-                          viewBox="0 0 24 24" 
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path 
-                            strokeLinecap="round" 
-                            strokeLinejoin="round" 
-                            strokeWidth={2} 
-                            d="M9 5l7 7-7 7"
-                          />
-                        </svg>
-                      </Link>
-                    )}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        ))}
-      </div>
+        );
+      })}
     </section>
   );
 };

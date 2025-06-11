@@ -1,35 +1,55 @@
 
 import React, { useEffect, useRef } from 'react';
 
-const skills = [
-  { name: "Figma", icon: "🎨" },
-  { name: "Framer", icon: "⚡" },
-  { name: "Sketch", icon: "✏️" },
-  { name: "Adobe XD", icon: "🎭" },
-  { name: "Photoshop", icon: "🖼️" },
-  { name: "Unity", icon: "🎮" },
-  { name: "Blender", icon: "🧊" },
-  { name: "Notion", icon: "📝" }
+const tools = [
+  { name: "Figma", logo: "/logos/figma.svg" },
+  { name: "Framer", logo: "/logos/framer.svg" },
+  { name: "Lovable", logo: "/logos/lovable.svg" },
+  { name: "AI", logo: "/logos/ai.svg" },
+  { name: "Amplitude", logo: "/logos/amplitude.svg" },
+  { name: "Notion", logo: "/logos/notion.svg" },
+  { name: "Blender", logo: "/logos/blender.svg" },
+  { name: "Unreal", logo: "/logos/unreal.svg" }
 ];
 
 const timelineItems = [
   {
-    year: "2021-Actual",
-    title: "UX/UI Designer Senior",
-    company: "Innovate Design Studio",
-    description: "Liderando equipos de diseño para crear experiencias digitales centradas en el usuario."
+    year: "2025-Present",
+    title: "UX and UI Designer at ISYFU in Lanzadera",
+    company: "Instituto Seguridad y Futuro (ISYFU)",
+    descriptions: [
+      "Redesigned core flows (tests, onboarding, dashboards, planning tools) to improve clarity and user success. ",
+      "Integrated gamification strategies (streaks, leaderboards, points) to increase engagement and retention. ",
+      "Designed paywalls and subscription flows, boosting freemium-to-premium conversion rates.",
+      "Collaborated with analytics teams (Amplitude) to identify optimization opportunities using behavioral data. ",
+      "Built comprehensive design systems ensuring accessibility, visual consistency, and adaptability.",
+      "Led the complete UX/UI overhaul of the CMS (Content Management System), applying advanced prototyping tools and design systems to streamline internal workflows.",
+      "Enhanced editor interfaces, dashboards, and data visualizations, ensuring intuitive use and measurable improvements in operational efficiency."
+    ]  
   },
   {
-    year: "2018-2021",
-    title: "Game UI Designer",
-    company: "GameCraft Studios",
-    description: "Diseño de interfaces para videojuegos móviles y de consola, optimizando la experiencia de juego."
+    year: "2023-2024",
+    title: "Designer and 3D Artist",
+    company: "Freelance",
+    descriptions: [
+      "3D modeling and texturing using Blender and Substance Painter for Unreal Engine projects."
+    ]  
   },
   {
-    year: "2015-2018",
-    title: "UI Designer",
-    company: "TechVision",
-    description: "Creación de interfaces visuales para aplicaciones web y móviles."
+    year: "2022-2023",
+    title: "Academic Collaborator in VR",
+    company: "TECH University",
+    descriptions: [
+      "Created 3D educational materials for a Master's program in Virtual Reality, designing interactive content to enhance the educational experience and foster immersive learning. "
+    ]  
+  },
+  {
+    year: "2020-4 months",
+    title: "3D Artist",
+    company: "Mindtrips",
+    descriptions: [
+      "Developed visual assets and textures in collaboration with design teams, focusing on improving visual quality and aesthetic consistency in video game environments."
+    ]  
   }
 ];
 
@@ -81,7 +101,7 @@ const About: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-space font-semibold mb-16 tracking-tight text-brand-blue">
-          Sobre mí
+          User center UX-UI Designer
         </h2>
         
         <div className="grid md:grid-cols-2 gap-12 md:gap-16">
@@ -92,21 +112,15 @@ const About: React.FC = () => {
           >
             <div className="space-y-6">
               <p className="text-lg leading-relaxed text-gray-800">
-                Soy Pablo Morro Ibáñez, diseñador UX/UI con más de 7 años de experiencia creando experiencias 
-                digitales centradas en el usuario, con un enfoque especial en el prototipado y testing.
-              </p>
+                Passionate about creating intuitive, engaging, and scalable digital experiences.  
+                Skilled in user research, prototyping, usability testing, and information architecture, 
+                I design solutions that connect user needs with business goals.
+                </p>
               
               <p className="text-lg leading-relaxed text-gray-800">
-                Mi background en diseño de videojuegos y modelado 3D me permite aportar una visión única 
-                sobre interactividad y espacios digitales, creando interfaces intuitivas pero memorables.
-              </p>
-              
-              <h3 className="text-xl font-space font-medium mt-10 mb-3 text-brand-blue">Filosofía de Diseño</h3>
-              
-              <p className="text-lg leading-relaxed text-gray-800">
-                Mi enfoque se basa en entender profundamente las necesidades del usuario final. Creo que el mejor 
-                diseño es aquel que resuelve problemas reales de forma elegante, accesible y memorable.
-              </p>
+                With experience across mobile, web, and CMS platforms, I thrive in agile, collaborative environments, 
+                continuously pushing design boundaries to deliver products that delight and perform.
+                </p>
             </div>
 
             {/* Timeline */}
@@ -114,7 +128,7 @@ const About: React.FC = () => {
               ref={timelineRef}
               className="mt-12 opacity-0 translate-y-10 transition-all duration-700 delay-300"
             >
-              <h3 className="text-xl font-space font-medium mb-6 text-brand-blue">Experiencia</h3>
+              <h3 className="text-xl font-space font-medium mb-6 text-brand-blue">Experience</h3>
               
               <div className="timeline-container">
                 {timelineItems.map((item, index) => (
@@ -122,14 +136,18 @@ const About: React.FC = () => {
                     <div className="text-sm text-brand-blue font-medium">{item.year}</div>
                     <div className="mt-1 font-space font-medium">{item.title}</div>
                     <div className="text-sm text-gray-600">{item.company}</div>
-                    <div className="mt-2 text-gray-700">{item.description}</div>
+                    <ul className="mt-2 text-gray-700 list-disc list-inside">
+                      {item.descriptions.map((desc, i) => (
+                        <li key={i}>{desc}</li>
+                      ))}
+                    </ul>
                   </div>
                 ))}
               </div>
             </div>
           </div>
           
-          {/* Right column - Image and Skills */}
+          {/* Right column - Image and Tools */}
           <div 
             ref={el => elementsRef.current[1] = el}
             className="opacity-0 translate-y-10 transition-all duration-700 delay-200"
@@ -145,18 +163,22 @@ const About: React.FC = () => {
               />
             </div>
             
-            <h3 className="text-xl font-space font-medium mb-6 mt-8 text-brand-blue">Skills & Herramientas</h3>
+            <h3 className="text-xl font-space font-medium mb-6 mt-8 text-brand-blue">Tools</h3>
             
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {skills.map((skill, index) => (
-                <div 
-                  key={skill.name}
-                  className="group flex flex-col items-center p-4 rounded-lg transition-all hover:bg-brand-light hover:scale-105"
-                >
-                  <span className="text-3xl mb-2" aria-hidden="true">{skill.icon}</span>
-                  <span className="text-sm font-medium">{skill.name}</span>
-                </div>
-              ))}
+              {tools.map((skill, index) => (
+              <div 
+                key={skill.name}
+                className="group flex flex-col items-center p-4 rounded-lg transition-all hover:bg-brand-light hover:scale-105"
+              >
+                <img
+                  src={skill.logo}
+                  alt={skill.name + " logo"}
+                  className="mb-2 w-10 h-10 object-contain"
+                />
+                <span className="text-sm font-medium">{skill.name}</span>
+              </div>
+            ))}
             </div>
           </div>
         </div>

@@ -1,6 +1,5 @@
 
 import React, { useEffect, useRef } from 'react';
-import MagneticText from './MagneticText';
 import { cn } from '@/lib/utils';
 
 const Hero: React.FC = () => {

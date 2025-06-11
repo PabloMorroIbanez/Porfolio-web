@@ -1,8 +1,9 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useLayoutEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
+import { ReactCompareSlider, ReactCompareSliderImage } from 'react-compare-slider';
 
 // Sample project data
 const projectDetails = {
@@ -16,17 +17,18 @@ const projectDetails = {
       {
         title: "Investigación",
         description: "Realizamos entrevistas con usuarios y estudios de mercado para entender las necesidades de los propietarios de plantas.",
-        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f"
+        images: ["https://images.unsplash.com/photo-1460925895917-afdab827c52f","https://images.unsplash.com/photo-1531297484001-80022131f5a1"],
+        multi_image: true
       },
       {
         title: "Wireframes",
         description: "Desarrollamos wireframes de baja fidelidad para establecer la estructura y flujo de la aplicación.",
-        image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1"
+        images: ["https://images.unsplash.com/photo-1531297484001-80022131f5a1"]
       },
       {
         title: "UI Design",
         description: "Creamos una interfaz visual limpia con fondos claros, acentos verdes y una tipografía legible para garantizar una experiencia de usuario calmada y agradable.",
-        image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334"
+        images: ["https://images.unsplash.com/photo-1483058712412-4245e9b90334"]
       }
     ],
     results: "La aplicación GreenCare ha recibido una respuesta positiva de los usuarios, con comentarios destacando su facilidad de uso, diseño visual atractivo y utilidad para el cuidado de plantas.",
@@ -37,6 +39,28 @@ const projectDetails = {
       "https://images.unsplash.com/photo-1531297484001-80022131f5a1",
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f"
     ]
+  },
+  appopn: {
+    title: "App OPN",
+    heroImage: "URL_DE_LA_IMAGEN",
+    overview: "Descripción general de App OPN.",
+    problem: "Problema que resuelve App OPN.",
+    solution: "Solución que aporta App OPN.",
+    processSteps: [
+      {
+        title: "Investigación",
+        description: "Descripción del proceso de investigación.",
+        images: ["URL_IMAGEN_1", "URL_IMAGEN_2"],
+        multi_image: true
+      },
+      // ...otros pasos...
+    ],
+    results: "Resultados del proyecto App OPN.",
+    technologies: ["Figma", "React", "Node.js"],
+    gallery: [
+      "URL_IMAGEN_1",
+      "URL_IMAGEN_2"
+    ]
   }
 };
 
@@ -44,7 +68,16 @@ const ProjectDetail: React.FC = () => {
   const { projectId } = useParams();
   const project = projectId && projectDetails[projectId as keyof typeof projectDetails];
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
-  
+
+  useLayoutEffect(() => {
+  if ('scrollRestoration' in window.history) {
+    window.history.scrollRestoration = 'manual';
+  }
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+  }, 0);
+}, [project]);
+    
   useEffect(() => {
     if (!project) return;
     
@@ -73,6 +106,7 @@ const ProjectDetail: React.FC = () => {
         if (el) observer.unobserve(el);
       });
     };
+    
   }, [project]);
 
   if (!project) {
@@ -82,6 +116,9 @@ const ProjectDetail: React.FC = () => {
       </div>
     );
   }
+
+  
+
 
   return (
     <div className="min-h-screen bg-white">
@@ -163,7 +200,7 @@ const ProjectDetail: React.FC = () => {
                 <div 
                   key={index}
                   ref={el => sectionRefs.current[4 + index] = el}
-                  className="grid md:grid-cols-2 gap-12 items-center opacity-0 translate-y-10 transition-all duration-700"
+                  className="grid md:grid-cols-2 gap-12 items-center opacity-0  transition-all duration-700"
                   style={{ transitionDelay: `${index * 200}ms` }}
                 >
                   <div className={`${index % 2 !== 0 ? 'md:order-2' : ''}`}>
@@ -176,11 +213,18 @@ const ProjectDetail: React.FC = () => {
                   </div>
                   
                   <div className={`${index % 2 !== 0 ? 'md:order-1' : ''} aspect-video bg-gray-100 rounded-lg overflow-hidden`}>
-                    <img 
-                      src={step.image} 
-                      alt={step.title} 
-                      className="w-full h-full object-cover"
-                    />
+                    {step.multi_image ? (
+                      <ReactCompareSlider
+                        itemOne={<ReactCompareSliderImage src={step.images[0]} alt={`${step.title} 1`} />}
+                        itemTwo={<ReactCompareSliderImage src={step.images[1]} alt={`${step.title} 2`} />}
+                      />
+                    ) : (
+                      <img
+                        src={step.images[0]}
+                        alt={step.title}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
                   </div>
                 </div>
               ))}
