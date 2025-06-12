@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Navigation from '../components/Navigation';
 import Hero from '../components/Hero';
 import About from '../components/About';
@@ -8,6 +8,34 @@ import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 
 const Index: React.FC = () => {
+
+  const heroSpacerRef = useRef<HTMLDivElement>(null);
+  const aboutRef = useRef<HTMLDivElement>(null);
+  const [progress, setProgress] = useState(0);
+
+  // Update progress based on scroll position between Hero and About sections
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!heroSpacerRef.current || !aboutRef.current) return;
+      const spacerRect = heroSpacerRef.current.getBoundingClientRect();
+      const aboutRect = aboutRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // Progreso entre el final del spacer y el inicio de About
+      if (spacerRect.bottom > 0 && aboutRect.top < windowHeight) {
+        const p = 1 - Math.max(0, Math.min(1, aboutRect.top / windowHeight));
+        setProgress(p);
+      } else if (spacerRect.bottom <= 0) {
+        setProgress(1);
+      } else {
+        setProgress(0);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Handle smooth scrolling for anchor links
   useEffect(() => {
     const handleAnchorClick = (e: MouseEvent) => {
@@ -71,15 +99,18 @@ const Index: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       <Navigation />
       <main>
-        <Hero />
-        <About />
-        <Projects />
-        <Contact />
+        {/* Spacer para Hero */}
+        <div ref={heroSpacerRef} data-about-spacer style={{ height: '100vh' }} />
+        <Hero scrollProgress={progress} />
+        {/* Spacer para About */}
+        <div ref={aboutRef} style={{ height: '100vh' }} />
+        <About scrollProgress={progress} />
+        {/*<Projects />
+        <Contact />*/}
       </main>
-      <Footer />
     </div>
   );
 };

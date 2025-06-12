@@ -97,12 +97,14 @@ const ProjectDetail: React.FC = () => {
       }
     );
 
-    sectionRefs.current.forEach((el) => {
+    const refsSnapshot = [...sectionRefs.current];
+
+    refsSnapshot.forEach((el) => {
       if (el) observer.observe(el);
     });
 
     return () => {
-      sectionRefs.current.forEach((el) => {
+      refsSnapshot.forEach((el) => {
         if (el) observer.unobserve(el);
       });
     };

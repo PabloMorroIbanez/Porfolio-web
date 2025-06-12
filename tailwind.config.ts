@@ -21,7 +21,7 @@ export default {
 		extend: {
 			fontFamily: {
 				sans: ['Inter', 'sans-serif'],
-				space: ['Space Grotesk', 'sans-serif'],
+				space: ['Epilogue', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -30,8 +30,8 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				brand: {
-					blue: '#0077C8',
-					light: '#E6F3FB',
+					white: 'hsl(var(--brand-white))',
+					blue: 'hsl(var(--brand-blue))',
 				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',

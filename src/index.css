@@ -39,34 +39,43 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 222.2 84% 4.5%; /* ligeramente más oscuro */
+    --foreground: 210 40% 98%; /* blanco casi puro */
 
-    --card: 222.2 84% 4.9%;
+    --card: 222.2 84% 4.5%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 222.2 84% 4.5%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 210 40% 98%; /* mantiene blanco */
+    --primary-foreground: 220 14% 12%; /* casi negro pero con tono frío */
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 218 28% 22%; /* más claro para mejor contraste */
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 218 24% 19%;
+    --muted-foreground: 210 20% 78%; /* más claro para mejorar legibilidad */
 
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 218 24% 22%;
     --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 70% 40%; /* rojo más claro que resalta más */
+    --destructive-foreground: 0 100% 96%; /* blanco con leve tinte cálido */
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 217 30% 28%;
+    --input: 217 30% 28%;
+    --ring: 210 50% 85%;
+
+    --brand-white: 210 40% 98%;
+    --brand-blue: 224 100% 67%;       /* #5B8CFF */
+    --brand-blue-strong: 224 100% 60%; /* #336CFF */
+    --brand-blue-soft: 224 100% 77%;   /* #89AFFF */
+    --brand-blue-accent: 224 100% 85%; /* #B6CCFF */
+    --brand-blue-dark: 224 100% 55%;   /* #1E56FF */
+    
   }
+
 }
 
 @layer base {
@@ -231,4 +240,34 @@ html {
 
 .animate-slideUpScale {
   animation: slideUpScale 3s cubic-bezier(0.4,0,0.2,1) both;
+}
+
+@keyframes spin-slow {
+  100% { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 1.6s linear infinite;
+}
+@keyframes typewriter {
+  from { width: 0 }
+  to { width: 100% }
+}
+.typewriter-loader {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid #0077C8;
+  width: 0;
+  animation:
+    typewriter 1.8s steps(32, end) 0.2s forwards,
+    blink-caret 0.8s step-end infinite;
+}
+@keyframes blink-caret {
+  0%, 100% { border-color: transparent }
+  50% { border-color: #0077C8 }
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-spin-slow, .typewriter-loader {
+    animation: none !important;
+  }
 }
