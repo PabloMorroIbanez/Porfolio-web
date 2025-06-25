@@ -17,7 +17,7 @@ const Navigation: React.FC = () => {
   }, [isMenuOpen]);
 
   // Número de secciones (incluyendo Hero, About, Projects, etc.)
-  const SECTION_COUNT = 2; // Actualiza según tus secciones
+  const SECTION_COUNT = 3; // Actualiza según tus secciones
 
   const scrollToSection = (sectionIndex: number) => {
     // Calcula la altura total scrollable de la página
@@ -108,7 +108,7 @@ const Navigation: React.FC = () => {
             }}
             className={navLinkClass}
             style={navLinkStyle}
-            aria-label="Ir a la sección About me"
+            aria-label="Ir a la sección Projects"
           >
             Projects
           </a>

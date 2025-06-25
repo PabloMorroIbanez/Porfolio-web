@@ -1,5 +1,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
+import TypewriterText from "./ui/typewriter-text";
 
 interface HeroProps {
   scrollProgress: number; // valor entre 0 y 1
@@ -11,8 +12,10 @@ const Hero: React.FC<HeroProps> = ({scrollProgress}) => (
     id="home"
     className="fixed inset-0 flex flex-col items-center justify-center bg-background px-6 z-30"
     style={{
+      opacity: scrollProgress < 1 ? 1 : 0,
       pointerEvents: scrollProgress < 0.99 ? "auto" : "none",
       willChange: "transform, opacity",
+      transition: "opacity 0.5s cubic-bezier(.4,0,.2,1)",
     }}
   >
     {/* SVG líneas arriba izquierda */}
@@ -69,7 +72,7 @@ const Hero: React.FC<HeroProps> = ({scrollProgress}) => (
 
     {/* Nombre centrado arriba */}
     <div 
-      className="w-full flex flex-col items-center justify-center mt-6 z-10"
+      className="w-full flex flex-col items-center justify-center mt-6 z-30"
       style={{
         transform: `translateY(${-scrollProgress * 40}px)`,
         opacity: 1 - scrollProgress,
@@ -77,7 +80,8 @@ const Hero: React.FC<HeroProps> = ({scrollProgress}) => (
       }}
     >
       <span
-        className="text-2xl md:text-3xl font-thin tracking-widest uppercase text-brand-white"
+        id="hero-title"
+        className="text-2xl md:text-3xltracking-widest  font-space font-thin uppercase text-brand-white"
         style={{
           letterSpacing: "0.18em",
         }}
@@ -85,7 +89,7 @@ const Hero: React.FC<HeroProps> = ({scrollProgress}) => (
         Pablo Morro Ibáñez
       </span>
       {/* Subtítulo estilo sección About */}
-      <div className="mb-4 tracking-widest text-xs text-brand-blue flex items-center justify-center gap-4 mt-2">
+      <div className="mb-4 text-xs tracking-widest flex items-center justify-center font-space text-brand-blue font-thin uppercase gap-4 mt-2">
         <span className="block w-8 h-px bg-border" />
         <span>User-Centered UX/UI Designer</span>
         <span className="block w-8 h-px bg-border" />
@@ -93,52 +97,33 @@ const Hero: React.FC<HeroProps> = ({scrollProgress}) => (
     </div>
 
     {/* Grid principal */}
-    <div className="flex-1 w-full flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0 z-10">
-      {/* CTA izquierda */}
+    <div className="flex-1 w-full flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0 z-30 pb-24">
+      {/* Título principal izquierda */}
       <div 
-        className="flex-1 flex flex-col items-start justify-center md:pl-24 mt-16 md:mt-0"
+        className="flex-1 flex flex-col items-start justify-center md:pl-24"
         style={{
           transform: `translateX(${-scrollProgress * 100}vw)`,
           opacity: 1 - scrollProgress,
           transition: "transform 0.4s, opacity 0.4s",
         }}
-        >
+      >
         <h1
           className={cn(
-            "text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight",
-            "text-brand-white mb-8"
+            "text-5xl md:text-8xl font-space font-medium tracking-tight",
+            "text-brand-white"
           )}
           style={{
-            letterSpacing: "0.01em",
             lineHeight: 1.1,
-            maxWidth: 520,
+            maxWidth: 1000,
           }}
         >
-          Diseñando experiencias <br /> que conectan personas <br /> con tecnología.
+          Designing experiences that connect people with {""}
+          <TypewriterText />
         </h1>
-      </div>
-      {/* Párrafo derecha */}
-      <div 
-        className="flex-1 flex flex-col items-end justify-end md:pr-24 mb-12 md:mb-0"
-        style={{
-          transform: `translateX(${scrollProgress * 100}vw)`,
-          opacity: 1 - scrollProgress,
-          transition: "transform 0.4s, opacity 0.4s",
-        }}
-        >
-        <p
-          className="text-base md:text-lg text-muted-foreground max-w-xs text-right"
-          style={{
-            letterSpacing: "0.01em",
-          }}
-        >
-          UX/UI Designer especializado en prototipado y experiencia de usuario. Arquitectura digital, lujo y precisión en cada detalle.
-        </p>
       </div>
     </div>
   </section>
 );
 
-// ...existing code...
 
 export default Hero;

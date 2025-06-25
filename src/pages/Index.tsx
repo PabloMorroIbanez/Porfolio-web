@@ -8,33 +8,53 @@ import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 
 const Index: React.FC = () => {
-
   const heroSpacerRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
+  const projectsRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
+  const [projectsProgress, setProjectsProgress] = useState(0);
 
   // Update progress based on scroll position between Hero and About sections
   useEffect(() => {
-    const handleScroll = () => {
-      if (!heroSpacerRef.current || !aboutRef.current) return;
-      const spacerRect = heroSpacerRef.current.getBoundingClientRect();
-      const aboutRect = aboutRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
+  const handleScroll = () => {
+    if (!heroSpacerRef.current || !aboutRef.current || !projectsRef.current) return;
 
-      // Progreso entre el final del spacer y el inicio de About
-      if (spacerRect.bottom > 0 && aboutRect.top < windowHeight) {
-        const p = 1 - Math.max(0, Math.min(1, aboutRect.top / windowHeight));
-        setProgress(p);
-      } else if (spacerRect.bottom <= 0) {
-        setProgress(1);
-      } else {
-        setProgress(0);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    const heroTop = heroSpacerRef.current.getBoundingClientRect().top;
+    const aboutTop = aboutRef.current.getBoundingClientRect().top;
+    const projectsTop = projectsRef.current.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
+
+    // --- About scrollProgress: 0 (empieza About) -> 1 (About centrado) -> 2 (About fuera, Projects revelado) ---
+    // Calcula el rango total entre el inicio de About y el inicio de Projects
+    const aboutSectionHeight = projectsTop - aboutTop;
+    let aboutProgress = 0;
+
+    if (aboutTop <= windowHeight && projectsTop > windowHeight) {
+      // Fase 1: About aparece y se escala (0 -> 1)
+      aboutProgress = 1 - Math.max(0, Math.min(1, aboutTop / windowHeight));
+    } else if (projectsTop <= windowHeight) {
+      // Fase 2: About sube como telón (1 -> 2)
+      const reveal = 1 - Math.max(0, Math.min(1, (projectsTop - windowHeight) / windowHeight));
+      aboutProgress = 1 + reveal;
+    } else {
+      // Antes de About
+      aboutProgress = 0;
+    }
+
+    setProgress(aboutProgress);
+
+    // --- Projects scrollProgress: 0 (oculto) -> 1 (completamente revelado) ---
+    let projectsProgress = 0;
+    if (projectsTop < windowHeight * 2) {
+      projectsProgress = 1 - Math.max(0, Math.min(1, (projectsTop - windowHeight) / windowHeight));
+    }
+    setProjectsProgress(projectsProgress);
+  };
+
+  window.addEventListener('scroll', handleScroll);
+  handleScroll();
+  return () => window.removeEventListener('scroll', handleScroll);
+}, []);
 
   // Handle smooth scrolling for anchor links
   useEffect(() => {
@@ -103,13 +123,14 @@ const Index: React.FC = () => {
       <Navigation />
       <main>
         {/* Spacer para Hero */}
-        <div ref={heroSpacerRef} data-about-spacer style={{ height: '100vh' }} />
+        <div ref={heroSpacerRef} data-about-spacer style={{ height: '100vh' } } />
         <Hero scrollProgress={progress} />
         {/* Spacer para About */}
-        <div ref={aboutRef} style={{ height: '100vh' }} />
-        <About scrollProgress={progress} />
-        {/*<Projects />
-        <Contact />*/}
+        <div ref={aboutRef} style={{ height: '150vh' }}/>
+        <About scrollProgress={progress} maxWidth={550} />
+        {/* Spacer para Projects */}
+        <div ref={projectsRef} style={{ height: '100vh' }}/>
+        <Projects scrollProgress={projectsProgress} />
       </main>
     </div>
   );

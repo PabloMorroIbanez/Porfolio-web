@@ -1,69 +1,66 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import styles from  "@/styles/Loader.module.css";
 
-// Azul branding
-const BRAND_BLUE = "#0077C8";
-const BG_COLOR = "#F8F9FA"; // Gris muy claro
+const Loader: React.FC<{ onFinish?: () => void }> = ({ onFinish }) => {
+  const [phase, setPhase] = useState<"loading" | "animating" | "done">("loading");
+  const [heroRect, setHeroRect] = useState<{top: number, left: number, width: number, height: number} | null>(null);
+  const loaderRef = useRef<HTMLDivElement>(null);
 
-const Loader: React.FC = () => (
-  <div
-    className="fixed inset-0 flex flex-col items-center justify-center z-50"
-    style={{
-      background: BG_COLOR,
-      fontFamily: "'Inter', 'Space Grotesk', sans-serif",
-      minHeight: "100vh",
-    }}
-    role="status"
-    aria-live="polite"
-  >
-    {/* Círculo giratorio */}
-    <div className="mb-8 flex items-center justify-center">
+  useEffect(() => {
+    const timer = setTimeout(() => setPhase("animating"), 1800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (phase === "animating") {
+      const hero = document.getElementById("hero-title");
+      if (hero) {
+        const rect = hero.getBoundingClientRect();
+        setHeroRect(rect);
+      }
+      const timer = setTimeout(() => {
+        setPhase("done");
+        if (onFinish) onFinish();
+      }, 800);
+      return () => clearTimeout(timer);
+    }
+  }, [phase, onFinish]);
+
+  let style: React.CSSProperties = {};
+  let className = styles["loader-root"];
+  if (phase === "done") className += "done";
+  if (phase === "animating" && heroRect && loaderRef.current) {
+    const loaderRect = loaderRef.current.getBoundingClientRect();
+    const scaleX = heroRect.width / loaderRect.width;
+    const scaleY = heroRect.height / loaderRect.height;
+    style = {
+      left: heroRect.left,
+      top: heroRect.top,
+      width: heroRect.width,
+      height: heroRect.height,
+      transform: `scale(${scaleX}, ${scaleY})`,
+    };
+    className += ` ${styles["loader-animating"]}`;
+  }
+
+  // Animación: centrado y grande -> posición y tamaño del Hero
+  return (
+    <div style={style} ref={loaderRef} className={className}>
       <span
-        className="inline-block"
+        className="text-2xl md:text-3xl tracking-widest font-space font-thin uppercase text-brand-white"
         style={{
-          width: 64,
-          height: 64,
+          letterSpacing: "0.18em",
         }}
       >
-        <svg
-          width="64"
-          height="64"
-          viewBox="0 0 64 64"
-          aria-hidden="true"
-          className="animate-spin-slow"
-          style={{
-            display: "block",
-          }}
-        >
-          <circle
-            cx="32"
-            cy="32"
-            r="28"
-            stroke={BRAND_BLUE}
-            strokeWidth="6"
-            fill="none"
-            strokeDasharray="44 88"
-            strokeLinecap="round"
-          />
-        </svg>
+        Pablo Morro Ibáñez
       </span>
+      <div className="mb-4 text-xs tracking-widest flex items-center justify-center font-space text-brand-blue font-thin uppercase gap-4 mt-2">
+        <span className="block w-8 h-px bg-border" />
+        <span>User-Centered UX/UI Designer</span>
+        <span className="block w-8 h-px bg-border" />
+      </div>
     </div>
-
-    {/* Texto con efecto typewriter */}
-    <div
-      className="text-center text-[1.2rem] md:text-2xl font-bold tracking-wide text-[#222] relative"
-      style={{
-        fontFamily: "'Space Grotesk', 'Inter', sans-serif",
-        color: "#222",
-        letterSpacing: "0.04em",
-        maxWidth: 320,
-      }}
-    >
-      <span className="typewriter-loader">
-        Pablo Morro Ibáñez | UX/UI Designer
-      </span>
-    </div>
-
-  </div>
-);
+  );
+};
 
 export default Loader;
